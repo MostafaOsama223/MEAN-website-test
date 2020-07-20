@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Welcome to this very decent website.
+        </title>
+    </head>
+    <body>
+        <div id='mainContent'>
+            <input type="button" value="Teacher" id="tchBtn"/>
+            <input type="button" value="Student" id="stdBtn"/>
+        </div>
+    </body>
+    <script type="text/javascript">
+        tchBtn = document.getElementById('tchBtn');
+        stdBtn = document.getElementById('stdBtn');
+        type = '';
+
+        tchBtn.onclick = function(){
+            type = 'tch';
+        }
+
+        stdBtn.onclick = function(){
+            type = 'std';
+        }
+
+    </script>
+</html>
