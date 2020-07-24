@@ -23,9 +23,12 @@ This is a MEAN website made as a assignment for the Wireless Research Lab at the
   ------                     |------------|-----------------------------                                |-------
   ~~login~~                      |~~POST~~        |~~`{"user":str,"pass":str}`~~                                    |~~`..t/log`~~
   register                   |POST        |`{"user":str,"pass":str,"name":str,"email":str,"phone":int}` |`..t/reg`
+  get tests                  |GET         |`...`                                                        |`..t/getTests`
   create test                |POST        |`{"ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ],"user":str}`  |`..t/tst`
+  get groups                 |GET         |`...`                                                        |`..t/getGrps`
   create group               |POST        |`{"stds":["std1", "std2", ..], "grpName":str, "user":str}`   |`..t/grp`
   receive students' requests |POST        |`{"std":int, "grpNo":int}`                                   |`..t/req`
+  get students               |GET         |`...`                                                        |`..t/getStds`
   move student               |POST        |`{"std":int,"from":str, "to":str}`                           |`..t/mov`
   remove student             |POST        |`{"std":int, "from":str}`                                    |`..t/rmv/std`
   remove group               |POST        |`{"grp":int}`                                                |`..t/rmv/grp`
