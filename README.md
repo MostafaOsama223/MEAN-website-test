@@ -21,7 +21,7 @@ This is a MEAN website made as a assignment for the Wireless Research Lab at the
 
   Name                       |  METHOD    |  BODY                                                       |  URL
   ------                     |------------|-----------------------------                                |-------
-  ~~login                      |POST        |`{"user":str,"pass":str}`                                    |`..t/log`~~
+  ~~login~~                      |~~POST~~        |~~`{"user":str,"pass":str}`~~                                    |~~`..t/log`~~
   register                   |POST        |`{"user":str,"pass":str,"name":str,"email":str,"phone":int}` |`..t/reg`
   create test                |POST        |`{"ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ],"user":str}`  |`..t/tst`
   create group               |POST        |`{"stds":["std1", "std2", ..], "grpName":str, "user":str}`   |`..t/grp`
