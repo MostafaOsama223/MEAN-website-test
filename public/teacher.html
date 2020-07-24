@@ -1,0 +1,42 @@
+<input type='button' value='Tests' class='navBtn' ng-click='showTests=true; showGroups=showStudents = false'>
+<input type='button' value='Groups' class='navBtn' ng-click='showGroups=true; showTests=showStudents = false'>
+<input type='button' value='Students' class='navBtn' ng-click='showStudents=true; showTests=showGroups = false'>
+<input type='button' value='Tests' class='navBtn' ng-click='showTests = true'>
+
+<table ng-show='showTests'>
+    <th>Test number</th>
+    <th>Max grade</th>
+    <th>Created at</th>
+    <tr>
+        <td>0</td>
+        <td>50</td>
+        <td>12:00 AM</td>
+    </tr>
+</table>
+
+<table ng-show='showGroups'>
+    <th>Group name</th>
+    <th>Number of students</th>
+    <th>Created at</th>
+    <tr>
+        <td><a href="#">Group the gamdeen</a></td>
+        <td>10</td>
+        <td>12:00 AM</td>
+    </tr>
+    <tr>
+        <td><a href="#">Group the t3baneen</a></td>
+        <td>1</td>
+        <td>1:00 PM</td>
+    </tr>
+</table>
+
+<table ng-show='showStudents'>
+    <th>Name</th>
+    <th>GPA</th>
+    <th>Group</th>
+    <tr>
+        <td>Majestic</td>
+        <td>4</td>
+        <td>Group the gamdeen</td>
+    </tr>
+</table>

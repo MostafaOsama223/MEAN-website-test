@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            Welcome to this very decent website.
-        </title>
-    </head>
-    <body>
-        <div id='mainContent'>
-            <input type="button" value="Teacher" id="tchBtn"/>
-            <input type="button" value="Student" id="stdBtn"/>
-        </div>
-    </body>
-    <script type="text/javascript">
-        tchBtn = document.getElementById('tchBtn');
-        stdBtn = document.getElementById('stdBtn');
-        type = '';
 
-        tchBtn.onclick = function(){
-            type = 'tch';
+<head>
+    <title>
+        Welcome to this very decent website.
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/index.css">
+</head>
+
+<body ng-app="myApp">
+    <ng-view></ng-view>
+</body>
+<script>
+    var app = angular.module('myApp', ['ngRoute']);
+
+    app.config(function ($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: '/public/login.html',
+                controller: 'loginCtrl'
+            })
+            .when('/student', {
+                templateUrl: '/public/student.html'
+            })
+            .when('/teacher', {
+                templateUrl: '/public/teacher.html',
+                controller: 'teacherCtrl'
+            });
+    });
+
+    app.controller('loginCtrl', function ($scope, $http, $location) {
+        $scope.type = 'teacher';
+        $scope.submit = function () {
+            var url = '/t/log';
+            var body = {
+                'user': $scope.user,
+                'pass': $scope.pass
+            };
+            $http.post(url, body).then(
+                (done) => {
+                    if (done.data === 'ok') {
+                        $location.url('/teacher');
+                    }
+                },
+                (err) => console.log('error'));
         }
+    });
 
-        stdBtn.onclick = function(){
-            type = 'std';
-        }
+    app.controller('teacherCtrl', function($scope){
 
-    </script>
+    });
+
+</script>
+
 </html>

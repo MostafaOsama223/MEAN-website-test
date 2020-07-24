@@ -1,0 +1,18 @@
+<div ng-init="type='teacher'" ng-controller='ctrl' id='mainContent'></div>
+    <form name='submitForm'>
+        <label for="user">Username:</label>
+        <input type="email" name="user" ng-model="user" placeholder="E-mail" required>
+        <span ng-show='submitForm.user.$invalid && submitForm.user.$dirty'>*Invalid email</span>
+        <br>
+
+        <label for="pass">Password:</label>
+        <input type="password" name="pass" ng-model='pass' placeholder="Password" required>
+        <br>
+
+        <div id='radios'>
+            <input type="radio" ng-model="type" value="teacher" checked>Teacher
+            <input type="radio" ng-model="type" value="student">Student
+        </div>
+        <input type="button" value="Submit" ng-click="submit()" class='submitBtn'>
+    </form>
+</div>
