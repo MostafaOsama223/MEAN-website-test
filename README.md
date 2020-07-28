@@ -31,12 +31,12 @@ This is a MEAN website made as a assignment for the Wireless Research Lab at the
       create test                |POST        |`{"ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ],"user":str}`              |`..t/tst`
       
     - Groups
-      Name                       |  METHOD    |  BODY                                                                   |  URL
-      ------                     |------------|-----------------------------                                            |-------
-      ~~get groups~~             |~~GET~~     |~~`...`~~                                                                |~~`..t/getGrps`~~
-      ~~remove group~~           |~~POST~~    |~~`{"grp":str}`~~                                                        |~~`..t/rmv/grp`~~
-      create group               |POST        |`{"stds":["std1", "std2", ..], "grpName":str, "stuNum":int, "at":str}`   |`..t/grp`
-      show group                 |GET         |`...`                                                                    |`..t/rmv/grp`
+      Name                       |  METHOD    |  BODY                                                                       |  URL
+      ------                     |------------|-----------------------------                                                |-------
+      ~~get groups~~             |~~GET~~     |~~`...`~~                                                                    |~~`..t/getGrps`~~
+      ~~remove group~~           |~~POST~~    |~~`{"grp":str}`~~                                                            |~~`..t/rmv/grp`~~
+      ~~create group~~           |~~POST~~    |~~`{"stds":["std1", "std2", ..], "grpName":str, "stuNum":int, "at":str}`~~   |~~`..t/grp`~~
+      ~~show group~~             |~~GET~~     |~~`...`~~                                                                    |~~`..t/grp/:grpName`~~
       
     - Students
       Name                       |  METHOD    |  BODY                                                                   |  URL
