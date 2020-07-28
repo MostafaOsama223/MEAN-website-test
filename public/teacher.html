@@ -1,42 +1,81 @@
-<input type='button' value='Tests' class='navBtn' ng-click='showTests=true; showGroups=showStudents = false'>
-<input type='button' value='Groups' class='navBtn' ng-click='showGroups=true; showTests=showStudents = false'>
-<input type='button' value='Students' class='navBtn' ng-click='showStudents=true; showTests=showGroups = false'>
-<input type='button' value='Tests' class='navBtn' ng-click='showTests = true'>
+<div>
+    <input type='button' value='Tests' class='navBtn' ng-click='showTests=true; groups=showStudents = false; getTests()'>
+    <input type='button' value='Groups' class='navBtn' ng-click='groups=true; showTests=showStudents = false;'>
+    <input type='button' value='Students' class='navBtn' ng-click='showStudents=true; showTests=groups = false; getStudents()'>
+    <input type='button' value='Tests' class='navBtn' ng-click='showTests = true'>
+    <br>
+</div>
 
 <table ng-show='showTests'>
     <th>Test number</th>
     <th>Max grade</th>
     <th>Created at</th>
-    <tr>
-        <td>0</td>
-        <td>50</td>
-        <td>12:00 AM</td>
+    <tr ng-repeat='test in tests'>
+        <td>{{test.num}}</td>
+        <td>{{test.maxGr}}</td>
+        <td>{{test.at}}</td>
     </tr>
 </table>
 
-<table ng-show='showGroups'>
-    <th>Group name</th>
-    <th>Number of students</th>
-    <th>Created at</th>
-    <tr>
-        <td><a href="#">Group the gamdeen</a></td>
-        <td>10</td>
-        <td>12:00 AM</td>
-    </tr>
-    <tr>
-        <td><a href="#">Group the t3baneen</a></td>
-        <td>1</td>
-        <td>1:00 PM</td>
-    </tr>
-</table>
+<div ng-show='groups'>
+    <input type="button" ng-click='createGroup=true;showGroups=showGroup=false; getStudents()' class="mainGrpBtn" value='Create Group'>
+    <input type="button" ng-click='createGroup=showGroup=false;showGroups=true; getGroups()' class="mainGrpBtn" value='Show Groups'>
+
+    <div ng-show='showGroup'>
+        <table>
+            <th>Group name</th>
+            <th>Number of students</th>
+            <th>Students</th>
+            <th>Created at</th>
+            <tr>
+                <td>{{currGrp.grpName}}</td>
+                <td>{{currGrp.stuNum}}</td>
+                <td>{{currGrp.stds}}</td>
+                <td>{{currGrp.at}}</td>
+                <td><input id='{{currGrp.grpName}}' type="button" ng-click='rmvGrp($event)' class='redBtn' value='remove'></td>
+            </tr>
+        </table>        
+    </div>
+
+    <div ng-show='createGroup'>
+        <h3>Students</h3>
+        <hr>
+        <table>
+            <th>Name</th>
+            <th>GPA</th>
+            <th>Group</th>
+            <tr ng-repeat='student in students'>
+                <td>{{student.name}}</td>
+                <td>{{student.gpa}}</td>
+                <td>{{student.grp}}</td>
+                <td><input id='{{student.name}}' type="button" value="Add To Group" class="addStuBtn" ng-click='stuToGrp($event)'></td>
+            </tr>
+        </table>
+        <input type="text" placeholder="Group name" ng-model='grpName' ng-show='crtGrp' class='grpNameTF'>
+        <input type="button" ng-click='crtGrp()' class="crtGrpBtn" value='Create Group'> <br>
+        
+    </div>
+    
+    <table ng-show='showGroups'>
+        <th>Group name</th>
+        <th>Number of students</th>
+        <th>Created at</th>
+        <tr ng-repeat='group in groups'>
+            <td><input type='button' ng-click="showGrp($event)"  class='grpUrlBtn' value='{{group.grpName}}'></td>
+            <td>{{group.stuNum}}</td>
+            <td>{{group.at}}</td>
+            <td><input id='{{group.grpName}}' type="button" ng-click='rmvGrp($event)' class='redBtn' value='remove'></td>
+        </tr>
+    </table>
+</div>
 
 <table ng-show='showStudents'>
     <th>Name</th>
     <th>GPA</th>
     <th>Group</th>
-    <tr>
-        <td>Majestic</td>
-        <td>4</td>
-        <td>Group the gamdeen</td>
+    <tr ng-repeat='student in students'>
+        <td>{{student.name}}</td>
+        <td>{{student.gpa}}</td>
+        <td>{{student.grp}}</td>
     </tr>
 </table>

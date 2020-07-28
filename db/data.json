@@ -1,0 +1,28 @@
+{
+    "users" : [
+    {"user":"123@mmm.com","pass":"1234"},
+    {"user":"mostafa@mmm.com","pass":"2222"}
+],
+
+    "tests" : [
+    {"num":"0", "maxGr":"50", "at":"12:00 AM"},
+    {"num":"1", "maxGr":"50", "at":"12:00 AM"},
+    {"num":"2", "maxGr":"50", "at":"12:00 AM"},
+    {"num":"3", "maxGr":"50", "at":"12:00 AM"}
+],
+
+    "groups" : [
+    {"grpName":"Group el gamdeen", "stuNum":"12", "at":"12:00 AM", "stds": []},
+    {"grpName":"Group el t3baneen", "stuNum":"999", "at":"12:00 AM", "stds": []},
+    {"grpName":"Group el Mota5zleen", "stuNum":"160", "at":"12:00 AM", "stds": []},
+    {"grpName":"Group el d7ee7a", "stuNum":"2.5", "at":"12:00 AM", "stds": []},
+    {"grpName":"Group el Sheikh Zayed", "stuNum":"1", "at":"12:00 AM", "stds": []}
+],
+
+    "students" : [
+    {"name":"Majestic", "gpa":"99", "grp":"Group el d7ee7a"},
+    {"name":"Hatem", "gpa":"1.001", "grp":"Group el Mota5zleen"},
+    {"name":"Ali", "gpa":"1.002", "grp":"Group el Sheikh Zayed"},
+    {"name":"Tare2", "gpa":"gamed", "grp":"Lw7doo"}
+]
+}

@@ -50,8 +50,113 @@
         }
     });
 
-    app.controller('teacherCtrl', function($scope){
+    app.controller('teacherCtrl', function($scope, $http, $location){
+        $scope.tests = $scope.groups = $scope.students = [];
+        $scope.newGroup = [];
+        $scope.currGrp = {};
 
+                                                /* TESTS */
+        /* Get Tests From The Server */
+        $scope.getTests = function(){
+            var url = '/t/getTests';
+            $http.get(url).then(
+                (done) => {
+                    console.log(done.data);
+                    $scope.tests = done.data;
+                },
+                (err) => console.log('error retreiving tests.')
+            )
+        }
+
+                                                /* STUDENTS */
+        /* Get Students From The Server */
+        $scope.getStudents = function(){
+            var url = '/t/getStudents';
+            $http.get(url).then(
+                (done) => {
+                    console.log(done.data);
+                    $scope.students = done.data;
+                },
+                (err) => console.log('error retreiving students.')
+            )
+        }
+    
+                                                /* GROUPS */
+        /* Get Groups From The Server */
+        $scope.getGroups = function(){
+            var url = '/t/getGroups';
+            $http.get(url).then(
+                (done) => {
+                    console.log(done.data);
+                    $scope.groups = done.data;
+                },
+                (err) => console.log('error retreiving groups.')
+            )
+        }
+
+        /* Remove Group */
+        $scope.rmvGrp = function($btnData){
+            var url = '/t/rmv/grp';
+            var body = {'grp':$btnData.srcElement.id};
+            
+            $http.post(url, body).then(
+                (done) => {
+                    console.log('Group deleted.');
+                },
+                (err) => console.log('error deleting group.')
+            );
+            $scope.getGroups();
+        }
+
+        /* Create Group */
+        $scope.crtGrp = function(){
+            var url = '/t/crt/grp';
+            var body = {'stds':$scope.newGroup, 'grpName':$scope.grpName, 'stuNum':$scope.newGroup.length, 'at':Date.now()};
+
+            $http.post(url, body).then(
+                (done) => {
+                    console.log('Group created.' + $scope.grpName);
+                    $scope.newGroup = [];
+                },
+                (err) => console.log('error deleting group.')
+            );
+            $scope.getGroups();
+        }
+    
+        /* Adds Student To Group */
+        $scope.stuToGrp = function($btnData){
+            var stuName = $btnData.srcElement.id;
+            if(!$scope.newGroup.includes(stuName)){
+                $scope.newGroup.push(stuName);
+                $btnData.srcElement.className = 'rmvStuBtn';
+                $btnData.srcElement.value = 'Remove From Group';
+            }else{
+                $scope.newGroup.push(stuName);
+                $btnData.srcElement.className = 'addStuBtn';
+                $btnData.srcElement.value = 'Add To Group';
+                var filteredGrp = $scope.newGroup.filter((val, ind, arr) => {
+                    return val != stuName;
+                });
+                $scope.newGroup = filteredGrp;
+            }
+            console.log($scope.newGroup);
+        }
+    
+        /* Show A Single Group */
+        $scope.showGrp = function($grpData){
+            var grpName = $grpData.srcElement.value.replaceAll(' ', '').toLowerCase();
+            var url = '/grp/' + grpName;
+
+            $http.get(url).then(
+                (done) => {
+                    $scope.showGroups = false;
+                    $scope.currGrp = done.data;
+                    $scope.showGroup = true;
+                    console.log($scope.currGrp);
+                },
+                (err) =>    console.log('error deleting group.')
+            );
+        }
     });
 
 </script>
