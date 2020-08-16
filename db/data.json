@@ -1,28 +1,25 @@
 {
     "users" : [
-    {"user":"123@mmm.com","pass":"1234"},
-    {"user":"mostafa@mmm.com","pass":"2222"}
+    {"user":"teacher@mmm.com","pass":"1234"}
 ],
 
     "tests" : [
-    {"num":"0", "maxGr":"50", "at":"12:00 AM"},
-    {"num":"1", "maxGr":"50", "at":"12:00 AM"},
-    {"num":"2", "maxGr":"50", "at":"12:00 AM"},
-    {"num":"3", "maxGr":"50", "at":"12:00 AM"}
+    {"num":"0", "ques":[
+            {"question":"How many month are there in the year?", "choices":["12", "15", "2", "-5"], "ans":"12", "marks":20},
+            {"question":"We eat soup with a/an", "choices":["knife", "fork", "spoon", "hand"], "ans":"spoon", "marks":30}    
+            ], "maxGr":"50", "at":"12:00 AM"}
 ],
 
     "groups" : [
-    {"grpName":"Group el gamdeen", "stuNum":"12", "at":"12:00 AM", "stds": []},
-    {"grpName":"Group el t3baneen", "stuNum":"999", "at":"12:00 AM", "stds": []},
-    {"grpName":"Group el Mota5zleen", "stuNum":"160", "at":"12:00 AM", "stds": []},
-    {"grpName":"Group el d7ee7a", "stuNum":"2.5", "at":"12:00 AM", "stds": []},
-    {"grpName":"Group el Sheikh Zayed", "stuNum":"1", "at":"12:00 AM", "stds": []}
+    {"grpName":"Group X", "stuNum":"2", "at":"12:00 AM", "stds": ["Mostafa O.", "Mohammed A."]},
+    {"grpName":"Group Y", "stuNum":"3", "at":"12:00 AM", "stds": ["Rasha H.", "Tare2", "Mohab W."]}
 ],
 
     "students" : [
-    {"name":"Majestic", "gpa":"99", "grp":"Group el d7ee7a"},
-    {"name":"Hatem", "gpa":"1.001", "grp":"Group el Mota5zleen"},
-    {"name":"Ali", "gpa":"1.002", "grp":"Group el Sheikh Zayed"},
-    {"name":"Tare2", "gpa":"gamed", "grp":"Lw7doo"}
+    {"name":"Mostafa O.", "gpa":"2.3", "grp":"Group X"},
+    {"name":"Rasha H.", "gpa":"2.4", "grp":"Group Y"},
+    {"name":"Mohammed A.", "gpa":"1.8", "grp":"Group X"},
+    {"name":"Tare2", "gpa":"2.8", "grp":"Group Y"},
+    {"name":"Mohab W.", "gpa":"3.8", "grp":"Group Y"}
 ]
 }

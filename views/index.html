@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        Welcome to this very decent website.
+        Welcome to this decent website.
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
@@ -50,10 +50,21 @@
         }
     });
 
-    app.controller('teacherCtrl', function($scope, $http, $location){
+    app.controller('teacherCtrl', function($scope, $http, $location, $filter, $compile){
         $scope.tests = $scope.groups = $scope.students = [];
+        $scope.showTests = $scope.showGroups = $scope.showStudents = false;
+        $scope.showTest = $scope.showGroup = $scope.showStudent = $scope.createGroup = $scope.createTest = false;
         $scope.newGroup = [];
-        $scope.currGrp = {};
+        $scope.newTest = {"num":"", "ques":[], "maxGr":0, "at":""};
+        $scope.currGrp = $scope.currTest = {};
+        $scope.timeNow = $filter('date')(new Date(), 'dd/MM/yyyy HH:mm:ss');
+                                                /* GENERAL */
+        $scope.suppressViews = function(){
+            $scope.showTests = $scope.showGroups = $scope.showStudents = false;
+            $scope.showTest = $scope.showGroup = $scope.showStudent = $scope.createGroup = $scope.createTest = false;
+            $scope.newGroup = [];
+            $scope.currGrp = $scope.currTest = {};
+        }
 
                                                 /* TESTS */
         /* Get Tests From The Server */
@@ -61,21 +72,102 @@
             var url = '/t/getTests';
             $http.get(url).then(
                 (done) => {
-                    console.log(done.data);
+                    $scope.suppressViews();
                     $scope.tests = done.data;
+                    $scope.showTests = true;
                 },
                 (err) => console.log('error retreiving tests.')
             )
         }
 
+        /* Remove Test */
+        $scope.rmvTest = function($btnData){
+            var url = '/t/rmv/tst';
+            var body = {'test':$btnData.srcElement.id};
+            
+            $http.post(url, body).then(
+                (done) => {
+                    $scope.tests = done.data;
+                    $scope.suppressViews();
+                    $scope.showTests = true;
+                },
+                (err) => console.log('error deleting test.')
+            );            
+        }
+
+        /* Create Test */
+        $scope.crtTest = function(){
+            var url = '/t/createTest';
+            $scope.newTest.ques.forEach((question, ind) => {
+                $scope.newTest.ques[ind].choices = question.choices.split(',');
+            });
+            $scope.newTest.at = Date.now();
+            var body = $scope.newTest;
+            $http.post(url, body).then(
+                (done) => {
+                    $scope.suppressViews();
+                    $scope.testRestoreDef();
+                    $scope.getTests();
+                },
+                (err) => console.log('error creating test.')
+            )
+        }
+
+        /* Restores The Defaults After Creating A Test */
+        $scope.testRestoreDef = function(){
+            $scope.newTest = {"num":"", "ques":[], "maxGr":0, "at":""};
+            var parentTable = (angular.element(document.getElementById('createTestQues')))[0];
+            while(parentTable.childNodes.length > 2){
+                var lastRec = parentTable.lastChild;
+                parentTable.removeChild(lastRec);
+            }
+
+        }
+
+        /* Add New Question To Test */
+        $scope.addQue = function(){
+            var table = (angular.element(document.getElementById('createTestQues')));
+            var quesNum = $scope.newTest.ques.length;
+            var newQues = ` <tr>\
+                                <td><input ng-model='newTest.ques[${quesNum}].question'/></td>\
+                                <td><input ng-model='newTest.ques[${quesNum}].choices'/></td>\
+                                <td><input ng-model='newTest.ques[${quesNum}].ans'/></td>\
+                                <td><input type='number' ng-model='newTest.ques[${quesNum}].marks' ng-change='updateTotMarks();'/></td>\
+                            </tr>`;
+            table.append(newQues);
+            $compile(table)($scope);
+        }
+
+        /* Update The Total Marks When Creating A Test */
+        $scope.updateTotMarks = function(){
+            var oldMaxGr = $scope.newTest.maxGr;
+            $scope.newTest.ques.forEach(q => $scope.newTest.maxGr += q.marks);
+            $scope.newTest.maxGr -= oldMaxGr;
+        }
+        
+        /* Show A Single Test */
+        $scope.getTest = function($testData){
+            var testNum = $testData.srcElement.value;
+            var url = 't/test/' + testNum;
+            
+            $http.get(url).then(
+                (done) => {
+                    $scope.suppressViews();
+                    $scope.currTest = done.data;
+                    $scope.showTests = $scope.showTest = true;
+                },
+                (err) => console.log('error retreiving tests.')
+            )
+        }        
                                                 /* STUDENTS */
         /* Get Students From The Server */
         $scope.getStudents = function(){
             var url = '/t/getStudents';
             $http.get(url).then(
                 (done) => {
-                    console.log(done.data);
+                    $scope.suppressViews();
                     $scope.students = done.data;
+                    $scope.showStudents = true;
                 },
                 (err) => console.log('error retreiving students.')
             )
@@ -87,8 +179,9 @@
             var url = '/t/getGroups';
             $http.get(url).then(
                 (done) => {
-                    console.log(done.data);
+                    $scope.suppressViews();
                     $scope.groups = done.data;
+                    $scope.showGroups = true;
                 },
                 (err) => console.log('error retreiving groups.')
             )
@@ -101,28 +194,59 @@
             
             $http.post(url, body).then(
                 (done) => {
-                    console.log('Group deleted.');
+                    $scope.groups = done.data;
                 },
                 (err) => console.log('error deleting group.')
             );
-            $scope.getGroups();
         }
 
         /* Create Group */
         $scope.crtGrp = function(){
             var url = '/t/crt/grp';
             var body = {'stds':$scope.newGroup, 'grpName':$scope.grpName, 'stuNum':$scope.newGroup.length, 'at':Date.now()};
+            var duplicated = false;
 
-            $http.post(url, body).then(
-                (done) => {
-                    console.log('Group created.' + $scope.grpName);
-                    $scope.newGroup = [];
-                },
-                (err) => console.log('error deleting group.')
-            );
-            $scope.getGroups();
+            $scope.suppressViews();
+            $scope.showGroups = true;
+            $scope.createGroup = true;
+            
+            if(body.stuNum && body.grpName){
+                $scope.groups.forEach(group => {
+                    if(group.grpName.toLowerCase() === body.grpName.toLowerCase()){ //Detects if the group name is duplicated
+                        duplicated = true;
+                    }
+                });
+                if(!duplicated){
+                    $http.post(url, body).then(
+                        (done) => {
+                            console.log('Group created.' + $scope.grpName);
+                            $scope.groupRestoreDef();
+                    },
+                        (err) => console.log('error creating group.')
+                    );
+                    $scope.getGroups();
+                }else{
+                    console.log('this group name is duplicated.');
+                }    
+            }
         }
     
+        /* Restores The Defaults After Creating A Group */
+        $scope.groupRestoreDef = function(){
+            var parent = (angular.element(document.getElementById('createGroupStu')))[0].lastChild;
+            var childRecords = parent.childNodes;
+            for (let i = 0; i < childRecords.length; i++) {
+                var record = childRecords[i];
+                if(record.className === 'ng-scope'){
+                    var btn = record.childNodes[7].firstChild;
+                    btn.className = 'addStuBtn';
+                    btn.value = 'Add To Group';
+                }
+            }
+            $scope.newGroup = [];
+            $scope.grpName = '';
+        }
+
         /* Adds Student To Group */
         $scope.stuToGrp = function($btnData){
             var stuName = $btnData.srcElement.id;
@@ -144,19 +268,24 @@
     
         /* Show A Single Group */
         $scope.showGrp = function($grpData){
-            var grpName = $grpData.srcElement.value.replaceAll(' ', '').toLowerCase();
-            var url = '/grp/' + grpName;
-
-            $http.get(url).then(
-                (done) => {
-                    $scope.showGroups = false;
-                    $scope.currGrp = done.data;
-                    $scope.showGroup = true;
-                    console.log($scope.currGrp);
-                },
-                (err) =>    console.log('error deleting group.')
-            );
+            var grpName = $grpData.srcElement.value;
+            $scope.groups.forEach(group => {
+                if(group.grpName === grpName)   $scope.currGrp = group;
+            });
+            if(!$scope.currGrp.stds.length) $scope.currGrp.stds = 'None';
+            else{
+                try {
+                    $scope.currGrp.stds = $scope.currGrp.stds.join(', ');
+                } catch (error) {
+                    console.log('something went wrong' + error)
+                }    
+            }
+            $scope.createGroup = false;
+            $scope.showGroup = true;
+            $scope.showGroups = true;
         }
+
+        $scope.getStudents();
     });
 
 </script>

@@ -7,15 +7,4 @@ router.get('/', function(req, res, next) {
   res.render('index.html');
 });
 
-router.get('/grp/:grpName', function(req, res){
-  var group = {};
-  data.groups.forEach((val, ind) => {
-    if(val.grpName.replace(/\s/g,'').toLowerCase() === req.params.grpName){
-      group = val;
-      return;
-    }
-  });
-  res.send(group);
-});
-
 module.exports = router;
