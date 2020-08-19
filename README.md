@@ -28,7 +28,7 @@ This is a MEAN website made as a assignment for the Wireless Research Lab at the
       Name                       |  METHOD    |  BODY                                                                   |  URL
       ------                     |------------|-----------------------------                                            |-------
       ~~get tests~~              |~~GET~~     |~~`...`~~                                                                |~~`..t/getTests`~~
-      create test                |POST        |`{"ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ],"user":str}`              |`..t/tst`
+      create test                |POST        |`{"num":int, "ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ], "maxGr":int, "at":str}`              |`..t/test`
       
     - Groups
       Name                       |  METHOD    |  BODY                                                                       |  URL
