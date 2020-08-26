@@ -18,15 +18,34 @@ This is a MEAN website made as a assignment for the Wireless Research Lab at the
   
 - Back End
   - Create the API endpoints
+    - Main
+      Name                       |  METHOD    |  BODY                                                                   |  URL
+      ------                     |------------|-----------------------------                                            |-------
+      ~~login~~                  |~~POST~~    |~~`{"user":str,"pass":str}`~~                                            |~~`..t/log`~~
+      register                   |POST        |`{"user":str,"pass":str,"name":str,"email":str,"phone":int}`             |`..t/reg`
+      
+    - Tests
+      Name                       |  METHOD    |  BODY                                                                   |  URL
+      ------                     |------------|-----------------------------                                            |-------
+      ~~get tests~~              |~~GET~~     |~~`...`~~                                                                |~~`..t/getTests`~~
+      create test                |POST        |`{"num":int, "ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ], "maxGr":int, "at":str}`              |`..t/test`
+      
+    - Groups
+      Name                       |  METHOD    |  BODY                                                                       |  URL
+      ------                     |------------|-----------------------------                                                |-------
+      ~~get groups~~             |~~GET~~     |~~`...`~~                                                                    |~~`..t/getGrps`~~
+      ~~remove group~~           |~~POST~~    |~~`{"grp":str}`~~                                                            |~~`..t/rmv/grp`~~
+      ~~create group~~           |~~POST~~    |~~`{"stds":["std1", "std2", ..], "grpName":str, "stuNum":int, "at":str}`~~   |~~`..t/grp`~~
+      ~~show group~~             |~~GET~~     |~~`...`~~                                                                    |~~`..t/grp/:grpName`~~
+      
+    - Students
+      Name                       |  METHOD    |  BODY                                                                   |  URL
+      ------                     |------------|-----------------------------                                            |-------
+      receive students' requests |POST        |`{"std":int, "grpNo":int}`                                               |`..t/req`
+      ~~get students~~           |~~GET~~     |~~`...`~~                                                                |~~`..t/getStds`~~
+      move student               |POST        |`{"std":int,"from":str, "to":str}`                                       |`..t/mov`
+      remove student             |POST        |`{"std":int, "from":str}`                                                |`..t/rmv/std`
+      return students' data      |POST        |`{"from":str, "to":str}`                                                 |`..t/getData`
 
-  Name                       |  METHOD    |  BODY                                                       |  URL
-  ------                     |------------|-----------------------------                                |-------
-  login                      |POST        |`{"user":str,"pass":str}`                                    |`..t/log`
-  register                   |POST        |`{"user":str,"pass":str,"name":str,"email":str,"phone":int}` |`..t/reg`
-  create test                |POST        |`{"ques":[ ["Bla Bla?", ["a1","a2",..], .. ] ],"user":str}`  |`..t/tst`
-  create group               |POST        |`{"stds":["std1", "std2", ..], "grpName":str, "user":str}`   |`..t/grp`
-  receive students' requests |POST        |`{"std":int, "grpNo":int}`                                   |`..t/req`
-  move student               |POST        |`{"std":int,"from":str, "to":str}`                           |`..t/mov`
-  remove student             |POST        |`{"std":int, "from":str}`                                    |`..t/rmv/std`
-  remove group               |POST        |`{"grp":int}`                                                |`..t/rmv/grp`
-  return students' data      |POST        |`{"from":str, "to":str}`                                     |`..t/getData`
+
+

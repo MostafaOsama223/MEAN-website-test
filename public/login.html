@@ -1,0 +1,37 @@
+<div ng-init="type='teacher'" ng-controller='loginCtrl' id='mainContent'></div>
+    <form name='submitForm'>
+        <label for="user">Username:</label>
+        <input type="email" name="user" ng-model="user" placeholder="E-mail" required>
+        <span ng-show='submitForm.user.$invalid && submitForm.user.$dirty'>*Invalid email</span>
+        <br>
+
+        <label for="pass">Password:</label>
+        <input type="password" name="pass" ng-model='pass' placeholder="Password" required>
+        <br>
+
+        <div id='radios'>
+            <input type="radio" ng-model="type" value="teacher" checked>Teacher
+            <input type="radio" ng-model="type" value="student" disabled>Student
+        </div>
+        <input type="button" value="Submit" ng-click="submit()" class='submitBtn'>
+    </form>
+    
+</div>
+<div style="padding-left: 25%;">
+    <p style="font-size: large; line-height: 1.4em;">
+        This website aims to facilitate the tasks of teachers and students such as
+            + Assignments & Tests(Making, Uploading, ..)
+            + Grades (Uploading, ..)
+            + Communication (Notifying students/teachers with updates, ..)
+            + Personal profiles with records/graphs showing the latest activities
+
+        <strong>Note that this website is under development and some features are disabled.</strong>
+        To login please enter this email and password <em>teacher@mmm.com,</em> <em>1234</em>
+        As a teacher you'll be able to manipulate tests and groups through 
+            + Creating
+            + Deleting
+            + Viewing their details
+
+        <a href="https://github.com/MostafaOsama223/MEAN-website-test" target="_blank">Github Repo</a>
+    </p>
+</div>

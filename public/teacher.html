@@ -1,0 +1,157 @@
+<div>
+    <input type='button' value='Tests' class='navBtn' ng-click='getTests()'>
+    <input type='button' value='Groups' class='navBtn' ng-click='getGroups()'>
+    <input type='button' value='Students' class='navBtn' ng-click='getStudents()'>
+    <br>
+</div>
+
+<div ng-show='showTests'>
+    <h2>Tests</h2>
+    <hr>
+    <input type="button" ng-click='createTest = true; showTest = false;' class="mainGrpBtn" value='Create Test'>
+    <input type="button" ng-click='getTests()' class="mainGrpBtn" value='Show Tests'>
+    <table>
+        <th>Test number</th>
+        <th>Questions</th>
+        <th>Max grade</th>
+        <th>Created at</th>
+        <th>Actions</th>
+        <tr ng-repeat='test in tests'>
+            <td><input type='button' ng-click="getTest($event)"  class='grpUrlBtn' value='{{test.num}}'></td>
+            <td>{{test.ques.length}}</td>
+            <td>{{test.maxGr}}</td>
+            <td>{{test.at}}</td>
+            <td><input id='{{test.num}}' type="button" ng-click='rmvTest($event)' class='redBtn' value='remove'></td>
+        </tr>
+    </table>
+
+    <div ng-show='showTest'>
+                        <!-- Test Details -->
+        <h3>Test Number {{currTest.num}} Details</h3>
+        <hr>
+        <table>
+            <th>Test Number</th>
+            <th>Max Grade</th>
+            <th>Created At</th>
+            <tr>
+                <td>{{currTest.num}}</td>
+                <td>{{currTest.maxGr}}</td>
+                <td>{{currTest.at}}</td>
+            </tr>
+                        <!-- Questions Details -->
+            <table>
+                <th>Questions</th>
+                <th>Choices</th>
+                <th>Correct Answer</th>
+                <th>Marks</th>
+                <tr ng-repeat='question in currTest.ques'>
+                    <td>{{question.question}}</td>
+                    <td>{{question.choices.join(' | ')}}</td>
+                    <td>{{question.ans}}</td>
+                    <td>{{question.marks}}</td>
+                </tr>
+            </table>
+        </table>
+    </div>
+
+    <div ng-show='createTest'>
+        <h3>Test Number {{newTest.num}}</h3>
+        <hr>
+        <table>
+            <th>Test Number</th>
+            <th>Max Grade</th>
+            <th>Created At</th>
+            <tr>
+                <td><input ng-model='newTest.num'/></td>
+                <td>{{newTest.maxGr}}</td>
+                <td ng-bind='timeNow'></td>
+            </tr>
+            <table id='createTestQues'>
+                <th>Questions</th>
+                <th>Choices</th>
+                <th>Correct Answer</th>
+                <th>Marks</th>
+                <tr>
+                    <td><input ng-model='newTest.ques[0].question'/></td>
+                    <td><input ng-model='newTest.ques[0].choices'/></td>
+                    <td><input ng-model='newTest.ques[0].ans'/></td>
+                    <td><input type='number' ng-model='newTest.ques[0].marks' ng-change='updateTotMarks();'/></td>
+                </tr>
+            </table>
+        </table>
+        <input type='button' ng-click='addQue()' class="crtGrpBtn" value='Add New Question' />
+        <input type="button" ng-click='crtTest()' class="crtGrpBtn" value='Done'> <br> 
+    </div>
+</div>
+
+<div ng-show='showGroups'>
+    <h2>Groups</h2>
+    <hr>
+    <input type="button" ng-click='crtGrp()' class="mainGrpBtn" value='Create Group'>
+    <input type="button" ng-click='getGroups()' class="mainGrpBtn" value='Show Groups'>
+    
+    <table>
+        <th>Group name</th>
+        <th>Number of students</th>
+        <th>Created at</th>
+        <tr ng-repeat='group in groups'>
+            <td><input type='button' ng-click="showGrp($event)"  class='grpUrlBtn' value='{{group.grpName}}'></td>
+            <td>{{group.stuNum}}</td>
+            <td>{{group.at}}</td>
+            <td><input id='{{group.grpName}}' type="button" ng-click='rmvGrp($event)' class='redBtn' value='remove'></td>
+        </tr>
+    </table>
+
+    <div ng-show='showGroup'>
+        <h3>Group {{currGrp.grpName}} Details</h3>
+        <hr>
+        <table>
+            <th>Group name</th>
+            <th>Number of students</th>
+            <th>Students</th>
+            <th>Created at</th>
+            <tr>
+                <td>{{currGrp.grpName}}</td>
+                <td>{{currGrp.stuNum}}</td>
+                <td>{{currGrp.stds}}</td>
+                <td>{{currGrp.at}}</td>
+                <td><input id='{{currGrp.grpName}}' type="button" ng-click='rmvGrp($event)' class='redBtn' value='remove'></td>
+            </tr>
+        </table>        
+    </div>
+
+    <div ng-show='createGroup'>
+        <h3>Students</h3>
+        <hr>
+        <table id='createGroupStu'>
+            <th>Name</th>
+            <th>GPA</th>
+            <th>Group</th>
+            <tr ng-repeat='student in students'>
+                <td>{{student.name}}</td>
+                <td>{{student.gpa}}</td>
+                <td>{{student.grp}}</td>
+                <td><input id='{{student.name}}' type="button" value="Add To Group" class="addStuBtn" ng-click='stuToGrp($event)'></td>
+            </tr>
+        </table>
+        <input type="text" placeholder="Group name" ng-model='grpName' class='grpNameTF'>
+        <input type="button" ng-click='crtGrp()' class="crtGrpBtn" value='Create Group'> <br> 
+    </div>
+    
+</div>
+
+<div ng-show='showStudents'>
+    <h2>Students</h2>
+    <hr>
+    <table>
+        <th>Name</th>
+        <th>GPA</th>
+        <th>Group</th>
+        <tr ng-repeat='student in students'>
+            <td>{{student.name}}</td>
+            <td>{{student.gpa}}</td>
+            <td>{{student.grp}}</td>
+        </tr>
+    </table>
+</div>
+
